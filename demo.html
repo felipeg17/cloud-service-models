@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>IaaS / PaaS / SaaS — Herramienta interactiva</title>
+<style>
+  :root {
+    --tuyo: #2563eb;
+    --parcial: #d97706;
+    --proveedor: #6b7280;
+    --bg: #f8fafc;
+    --ok: #16a34a;
+    --bad: #dc2626;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 24px;
+    color: #111827;
+  }
+  h1 { font-size: 28px; margin-bottom: 4px; }
+  .subtitle { color: #4b5563; margin-bottom: 20px; font-size: 16px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .tab-btn {
+    font-size: 18px; padding: 10px 20px; border-radius: 10px; border: 2px solid #d1d5db;
+    background: white; cursor: pointer; font-weight: 600;
+  }
+  .tab-btn.active { background: var(--tuyo); color: white; border-color: var(--tuyo); }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ---- VISTA A: pila de responsabilidad ---- */
+  .model-btns { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+  .model-btn {
+    font-size: 18px; padding: 12px 22px; border-radius: 10px; border: 2px solid #d1d5db;
+    background: white; cursor: pointer; font-weight: 700;
+  }
+  .model-btn.selected { border-color: #111827; box-shadow: 0 0 0 3px rgba(17,24,39,0.15); }
+  .stack { max-width: 720px; }
+  .layer {
+    padding: 16px 20px; margin-bottom: 6px; border-radius: 8px; font-size: 18px; font-weight: 600;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+    background: #e5e7eb; color: #111827;
+  }
+  .layer .tag { font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 20px; color: white; }
+  .layer.tuyo { background: var(--tuyo); color: white; }
+  .layer.parcial { background: var(--parcial); color: white; }
+  .layer.proveedor { background: var(--proveedor); color: white; }
+  .legend { margin-top: 18px; font-size: 15px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+
+  /* ---- VISTA B: clasifica el servicio ---- */
+  .game-area { display: flex; gap: 30px; flex-wrap: wrap; }
+  .cards { display: flex; flex-wrap: wrap; gap: 12px; max-width: 480px; }
+  .card {
+    padding: 14px 18px; border-radius: 10px; border: 2px solid #d1d5db; background: white;
+    cursor: pointer; font-size: 17px; font-weight: 600; user-select: none;
+  }
+  .card.selected { border-color: #111827; box-shadow: 0 0 0 3px rgba(17,24,39,0.15); }
+  .card.done { opacity: 0.35; cursor: default; }
+  .buckets { display: flex; flex-direction: column; gap: 10px; min-width: 220px; }
+  .bucket {
+    padding: 16px; border-radius: 10px; border: 3px dashed #9ca3af; text-align: center;
+    font-size: 17px; font-weight: 700; cursor: pointer; background: white;
+  }
+  .bucket:hover { background: #f1f5f9; }
+  .feedback { font-size: 16px; margin-top: 14px; font-weight: 700; min-height: 24px; }
+  .feedback.ok { color: var(--ok); }
+  .feedback.bad { color: var(--bad); }
+  .score { font-size: 16px; margin-top: 10px; color: #374151; }
+  .reveal-btn, .reset-btn {
+    margin-top: 16px; padding: 10px 18px; font-size: 15px; border-radius: 8px;
+    border: 2px solid #111827; background: #111827; color: white; cursor: pointer; margin-right: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h1>¿IaaS, PaaS o SaaS?</h1>
+<div class="subtitle">Herramienta interactiva - Modelos de servicio en la nube</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showView('A')">Pila de responsabilidad</button>
+  <button class="tab-btn" onclick="showView('B')">Clasificar el servicio</button>
+</div>
+
+<!-- VISTA A -->
+<div id="viewA" class="view active">
+  <p style="font-size:16px;max-width:680px;">Elige un modelo y observa qué capas de la pila tecnológica administras <b>tú</b> y cuáles administra el <b>proveedor</b>. Esa franja que se mueve es, literalmente, el "nivel de dependencia" del que hablamos en clase.</p>
+  <div class="model-btns">
+    <button class="model-btn" onclick="setModel('onprem')">On-Premises</button>
+    <button class="model-btn" onclick="setModel('iaas')">IaaS</button>
+    <button class="model-btn" onclick="setModel('paas')">PaaS</button>
+    <button class="model-btn" onclick="setModel('saas')">SaaS</button>
+  </div>
+  <div class="stack" id="stack"></div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--tuyo)"></span> Tú administras</span>
+    <span><span class="dot" style="background:var(--parcial)"></span> Compartido / parcial</span>
+    <span><span class="dot" style="background:var(--proveedor)"></span> El proveedor administra</span>
+  </div>
+</div>
+
+<!-- VISTA B -->
+<div id="viewB" class="view">
+  <p style="font-size:16px;max-width:680px;">Haz clic en una tarjeta y luego en el modelo al que crees que pertenece.</p>
+  <div class="game-area">
+    <div class="cards" id="cards"></div>
+    <div class="buckets">
+      <div class="bucket" data-model="onprem" onclick="answer('onprem')">On-Premises</div>
+      <div class="bucket" data-model="iaas" onclick="answer('iaas')">IaaS</div>
+      <div class="bucket" data-model="paas" onclick="answer('paas')">PaaS</div>
+      <div class="bucket" data-model="saas" onclick="answer('saas')">SaaS</div>
+    </div>
+  </div>
+  <div class="feedback" id="feedback"></div>
+  <div class="score" id="score">0 / 8 correctas</div>
+  <button class="reveal-btn" onclick="revealAll()">Revelar todas las respuestas</button>
+  <button class="reset-btn" onclick="resetGame()">Reiniciar</button>
+</div>
+
+<script>
+// ---------- VISTA A: pila de responsabilidad ----------
+const layers = ["Aplicación", "Datos", "Runtime", "Middleware", "Sistema Operativo", "Virtualización", "Servidores", "Almacenamiento y Red"];
+
+const responsibility = {
+  onprem:  { tuyo: layers },
+  iaas:    { tuyo: ["Aplicación","Datos","Runtime","Middleware","Sistema Operativo"] },
+  paas:    { tuyo: ["Aplicación","Datos"] },
+  saas:    { tuyo: [], parcial: ["Datos"] }
+};
+
+function classify(model, layer) {
+  const r = responsibility[model];
+  if (r.tuyo.includes(layer)) return "tuyo";
+  if (r.parcial && r.parcial.includes(layer)) return "parcial";
+  return "proveedor";
+}
+
+function renderStack(model) {
+  const stack = document.getElementById("stack");
+  stack.innerHTML = "";
+  layers.forEach(layer => {
+    const cls = model ? classify(model, layer) : "";
+    const div = document.createElement("div");
+    div.className = "layer" + (cls ? " " + cls : "");
+    const label = cls === "tuyo" ? "TÚ" : cls === "parcial" ? "COMPARTIDO" : cls === "proveedor" ? "PROVEEDOR" : "";
+    div.innerHTML = `<span>${layer}</span>` + (label ? `<span class="tag" style="background:rgba(0,0,0,0.25)">${label}</span>` : "");
+    stack.appendChild(div);
+  });
+}
+
+function setModel(model) {
+  document.querySelectorAll(".model-btn").forEach(b => b.classList.remove("selected"));
+  [...document.querySelectorAll(".model-btn")].find(b => b.textContent.toLowerCase().includes(model === "onprem" ? "premises" : model)).classList.add("selected");
+  renderStack(model);
+}
+
+renderStack(null);
+
+// ---------- VISTA B: clasifica el servicio ----------
+const services = [
+  { name: "Gmail", model: "saas" },
+  { name: "Netflix", model: "saas" },
+  { name: "Compute Engine (VM)", model: "iaas" },
+  { name: "Cloud Run", model: "paas" },
+  { name: "Dropbox", model: "saas" },
+  { name: "Cloud SQL", model: "paas" },
+  { name: "Vertex AI / Gemini API", model: "saas" },
+  { name: "Servidor propio en el clóset del laboratorio", model: "onprem" },
+];
+
+let selectedCard = null;
+let score = 0;
+const answered = new Set();
+
+function renderCards() {
+  const cardsDiv = document.getElementById("cards");
+  cardsDiv.innerHTML = "";
+  services.forEach((s, i) => {
+    const div = document.createElement("div");
+    div.className = "card" + (answered.has(i) ? " done" : "");
+    div.textContent = s.name;
+    div.dataset.index = i;
+    if (!answered.has(i)) {
+      div.onclick = () => selectCard(i, div);
+    }
+    cardsDiv.appendChild(div);
+  });
+}
+
+function selectCard(i, div) {
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("selected"));
+  div.classList.add("selected");
+  selectedCard = i;
+  document.getElementById("feedback").textContent = "";
+}
+
+function answer(model) {
+  if (selectedCard === null) {
+    document.getElementById("feedback").textContent = "Primero selecciona una tarjeta.";
+    document.getElementById("feedback").className = "feedback bad";
+    return;
+  }
+  const s = services[selectedCard];
+  const fb = document.getElementById("feedback");
+  if (s.model === model) {
+    fb.textContent = `Correcto: ${s.name} es ${labelModel(model)}.`;
+    fb.className = "feedback ok";
+    if (!answered.has(selectedCard)) score++;
+  } else {
+    fb.textContent = `No es ${labelModel(model)}. ${s.name} es ${labelModel(s.model)}.`;
+    fb.className = "feedback bad";
+  }
+  answered.add(selectedCard);
+  selectedCard = null;
+  renderCards();
+  document.getElementById("score").textContent = `${score} / ${services.length} correctas`;
+}
+
+function labelModel(m) {
+  return { onprem: "On-Premises", iaas: "IaaS", paas: "PaaS", saas: "SaaS" }[m];
+}
+
+function revealAll() {
+  let msg = services.map(s => `${s.name} → ${labelModel(s.model)}`).join(" | ");
+  document.getElementById("feedback").textContent = msg;
+  document.getElementById("feedback").className = "feedback";
+  services.forEach((_, i) => answered.add(i));
+  renderCards();
+}
+
+function resetGame() {
+  answered.clear();
+  score = 0;
+  selectedCard = null;
+  document.getElementById("feedback").textContent = "";
+  document.getElementById("score").textContent = `0 / ${services.length} correctas`;
+  renderCards();
+}
+
+renderCards();
+
+// ---------- Tabs ----------
+function showView(view) {
+  document.getElementById("viewA").classList.toggle("active", view === "A");
+  document.getElementById("viewB").classList.toggle("active", view === "B");
+  document.querySelectorAll(".tab-btn").forEach((b, i) => b.classList.toggle("active", (view === "A" && i === 0) || (view === "B" && i === 1)));
+}
+</script>
+
+</body>
+</html>
