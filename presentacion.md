@@ -6,10 +6,59 @@ Cuando se construye software, en algún momento se necesita que deje de vivir so
 computador y empiece a estar **disponible para otros** — corriendo todo el tiempo,
 accesible desde internet.
 
-Antes, eso significaba comprar y mantener servidores propios (`on-premise`). Hoy, en la mayoría
-de los casos, significa usar **la nube**: una red gigante de servidores interconectados,
-propiedad de un proveedor (Google, Amazon, Microsoft...), que da acceso a recursos
-(cómputo, almacenamiento, red) y servicios, sin que se tenga que comprar ni mantener ese hardware.
+### Antes: infraestructura on-premise
+
+Hasta principios de los años 2000, la manera de construir servicio basado en internet era con
+infraestructura propia — a esto se le llama **on-premise** (literalmente, "en las
+instalaciones físicas"). Cualquier empresa que quisiera tener un sistema disponible en internet
+tenía que resolver::
+
+```mermaid
+graph TD
+    subgraph OP["🏢 Infraestructura On-Premise"]
+        SPACE["📦 Espacio físico<br/>(sala de servidores o data center propio)"]
+        HW["🖥️ Hardware<br/>(servidores, discos, switches, cables)"]
+        PWR["⚡ Energía y refrigeración<br/>(UPS, aires acondicionados)"]
+        NET["🌐 Conexión a internet<br/>(ISP, firewall, IPs fijas)"]
+        TEAM["👥 Equipo de TI dedicado<br/>(sys-admins, seguridad, soporte 24/7)"]
+        SW["💻 Software<br/>(SO, middleware, aplicación, backups)"]
+    end
+
+    SPACE --> HW
+    HW --> PWR
+    HW --> NET
+    HW --> TEAM
+    HW --> SW
+```
+
+El problema no era técnico — era principalment **operativo y financiero**:
+
+| Problema | Consecuencia |
+|---|---|
+| Comprar el hardware por adelantado | Costo inicial enorme antes de tener un solo usuario (CapEx) |
+| Capacidad fija | Si el tráfico sube, los servidores se saturan; si baja, el hardware queda ocioso |
+| Escalamiento demorado | Pedir, comprar, instalar y configurar hardware nuevo no es inmediato |
+| Mantenimiento 24/7 | Alguien debe dar soporte cuando se presentan problemas |
+| Costo de redundancia | Para evitar un punto único de falla, hay que duplicar todo el hardware |
+
+### Cómo nació la nube?
+
+A mediados de los 2000, Amazon enfrentó este problema a escala masiva: construyó una
+infraestructura enorme para soportar `amazon.com`, pero esa capacidad quedaba ociosa la mayor
+parte del tiempo. La solución fue venderle esa capacidad sobrante a otras empresas — y en 2006
+lanzó **Amazon Web Services (AWS)**, el primer servicio de infraestructura como servicio
+comercial a gran escala.
+
+La idea era simple: en vez de comprar un generador eléctrico para tu casa, te conectas a la
+red eléctrica y pagas solo por lo que consumes. La nube aplicó ese mismo modelo al cómputo.
+
+### La nube hoy
+
+Hoy, "usar la nube" significa acceder a una red gigante de servidores interconectados,
+propiedad de un proveedor -- Google, Amazon, Microsoft --, que da acceso a recursos
+(cómputo, almacenamiento, red) y servicios especializados, **sin que se tenga que comprar ni mantener ese
+hardware**. El proveedor resuelve el espacio, la energía, la refrigeración, la red y el hardware;
+nosotros solo pagamos por lo que usamos.
 
 Pero "usar la nube" no es una sola cosa: hay distintos niveles de cuánto hace el proveedor
 por nosotros y cuánto tenemos que hacer nosotros mismos. A esos niveles los llamamos
