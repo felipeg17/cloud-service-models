@@ -1,6 +1,15 @@
 # Modelos de Servicio en la Nube: ¿cuánta nube necesito para desplegar mi software?
 
-## ¿Qué es "la nube"?
+## Contenido
+
+1. [¿Para qué usamos "la nube"?](#) — Contexto general de la nube
+2. [La pila de responsabilidad](#) — Quién administra qué en cada modelo
+3. [IaaS](#) — Compute Engine (GCP)
+4. [PaaS](#) — Cloud Run (GCP)
+5. [SaaS](#) — Gemini API (GCP)
+6. [Actividad: clasifica el servicio](#) Cierre
+
+## ¿Para qué usamos "la nube"?
 
 Cuando se construye software, en algún momento se necesita que deje de vivir solo en nuestro
 computador y empiece a estar **disponible para otros** — corriendo todo el tiempo,
@@ -11,7 +20,7 @@ accesible desde internet.
 Hasta principios de los años 2000, la manera de construir servicio basado en internet era con
 infraestructura propia — a esto se le llama **on-premise** (literalmente, "en las
 instalaciones físicas"). Cualquier empresa que quisiera tener un sistema disponible en internet
-tenía que resolver::
+tenía que resolver:
 
 ```mermaid
 graph TD
@@ -31,17 +40,16 @@ graph TD
     HW --> SW
 ```
 
-El problema no era técnico — era principalment **operativo y financiero**:
+El problema no era técnico — era principalmente **operativo y financiero**:
 
-| Problema | Consecuencia |
-|---|---|
-| Comprar el hardware por adelantado | Costo inicial enorme antes de tener un solo usuario (CapEx) |
-| Capacidad fija | Si el tráfico sube, los servidores se saturan; si baja, el hardware queda ocioso |
-| Escalamiento demorado | Pedir, comprar, instalar y configurar hardware nuevo no es inmediato |
-| Mantenimiento 24/7 | Alguien debe dar soporte cuando se presentan problemas |
-| Costo de redundancia | Para evitar un punto único de falla, hay que duplicar todo el hardware |
+| Problema |
+|---------------------------------------------|
+| Comprar el hardware por adelantado -> CaExp |
+| Capacidad fija -> Infra ociosa |
+| Escalamiento demorado -> Requiere recursos |
+| Mantenimiento 24/7 -> Soporte |
 
-### Cómo nació la nube?
+### ¿Cómo nació la nube?
 
 A mediados de los 2000, Amazon enfrentó este problema a escala masiva: construyó una
 infraestructura enorme para soportar `amazon.com`, pero esa capacidad quedaba ociosa la mayor
@@ -49,38 +57,31 @@ parte del tiempo. La solución fue venderle esa capacidad sobrante a otras empre
 lanzó **Amazon Web Services (AWS)**, el primer servicio de infraestructura como servicio
 comercial a gran escala.
 
-La idea era simple: en vez de comprar un generador eléctrico para tu casa, te conectas a la
-red eléctrica y pagas solo por lo que consumes. La nube aplicó ese mismo modelo al cómputo.
+### La nube al día de hoy
 
-### La nube hoy
+Hoy en día, "usar la nube" significa `acceder a una red gigante de servidores interconectados
+que proporciona recursos` y son propiedad de un proveedor, el cual se ocupa de todo y nosotros solo
+pagamos por lo que usamos.
 
-Hoy, "usar la nube" significa acceder a una red gigante de servidores interconectados,
-propiedad de un proveedor -- Google, Amazon, Microsoft --, que da acceso a recursos
-(cómputo, almacenamiento, red) y servicios especializados, **sin que se tenga que comprar ni mantener ese
-hardware**. El proveedor resuelve el espacio, la energía, la refrigeración, la red y el hardware;
-nosotros solo pagamos por lo que usamos.
-
-Pero "usar la nube" no es una sola cosa: hay distintos niveles de cuánto hace el proveedor
-por nosotros y cuánto tenemos que hacer nosotros mismos. A esos niveles los llamamos
-**modelos de servicio**: IaaS, PaaS y SaaS.
+Pero "usar la nube" no es solo pagar, hay distintos niveles de cuánto hace el proveedor
+y cuánto tenemos que hacer nosotros mismos. Esto se conoce como **modelos de servicio**: IaaS, PaaS y SaaS.
 
 ---
 
 ## El problema, simplificado
 
-Para entender estos niveles, pensemos primero en un problema que no tiene nada que ver con software:
+Para entender los niveles de servicio, consideremos:
 
-> Quiero vender pan. Tengo tres opciones:
+> Quiero vender pan. Hay tres opciones:
 >
-> 1. Alquilar una cocina industrial vacía y hacer todo yo mismo.
-> 2. Contratar un servicio de panadería que me presta cocina, ingredientes y personal.
+> 1. Alquilar una cocina vacía y hacer todo yo mismo.
+> 2. Contratar un servicio de panadería con ingredientes y personal.
 > 3. Simplemente comprar el pan ya horneado.
 
-Las tres son formas válidas de "tener pan".
+Las tres son formas válidas de "tener pan" para venderlo.
 La diferencia es **cuánto control tengo** y **cuánto trabajo me ahorro**.
 
-Ahora si reemplazamos "pan" por "mi aplicación corriendo": es exactamente el mismo dilema
-que enfrenta cualquier equipo de ingeniería.
+Ahora al reemplazar "pan" por "mi aplicación en la nube": es la misma elección del modelo de servicio.
 Eso, exactamente, es la diferencia entre **IaaS**, **PaaS** y **SaaS**.
 
 <details>
@@ -91,8 +92,6 @@ Eso, exactamente, es la diferencia entre **IaaS**, **PaaS** y **SaaS**.
 | 🍞 Pan    | Horneo todo desde cero           | Alquilo la cocina vacía                  | Panadería con personal e ingredientes | Compro el pan horneado                   |
 | 🍕 Pizza  | Hago la masa desde cero en casa  | Compro masa y salsa para hornear en casa | Pizza a domicilio                     | Ceno en el restaurante                   |
 | 🍝 Pasta  | Compro los ingredientes y cocino | Compro pasta y salsa hechas              | Pido comida a domicilio               | Llamo y pido el plato exacto, todo listo |
-
-El concepto de fondo nunca cambia: **a quién le delego cada parte del trabajo**.
 
 </details>
 
@@ -127,19 +126,18 @@ _Menos dependencia del proveedor ← &nbsp;&nbsp;&nbsp;&nbsp; → Más dependenc
 [Tabla ampliada](http://localhost:8080/index.html)
 
 <details>
-<summary>¿Esto tiene nombre formal?</summary>
+<summary>Definición formal</summary>
 
-Sí — en la industria se llama **Shared Responsibility Model** (modelo de responsabilidad compartida),
-y la definición de qué hace que algo sea realmente "la nube" (no solo un servidor remoto) viene del NIST:
-acceso a demanda, disponible desde cualquier lugar, recursos compartidos entre varios clientes,
-capacidad de crecer o reducirse automáticamente, y pago solo por lo que se usa.
+En la industria se llama **Shared Responsibility Model** (modelo de responsabilidad compartida),
+el NIST establece: algo que en la nube debe tener acceso a demanda, disponible desde cualquier lugar,
+recursos compartidos, capacidad de crecer o reducirse automáticamente, y pago solo por lo que se usa.
 </details>
 
 ---
 
 ## IaaS — Infrastructure as a Service
 
-**La idea:** el proveedor presta la infraestructura básica (servidores virtuales, almacenamiento, red)
+**Concepto:** el proveedor presta la infraestructura básica (servidores virtuales, almacenamiento, red)
 ya virtualizada. Yo decido qué sistema operativo usar, qué instalar, y cómo configurarlo todo.
 
 ```mermaid
@@ -153,19 +151,13 @@ graph TD
 ```
 
 <details>
-<summary>Tipos de servicio, ventajas, desventajas y casos de uso</summary>
+<summary>Resumen</summary>
 
-**Tipos de servicio típicos:** servidores virtuales (cómputo), discos/almacenamiento, redes virtuales y firewalls.
-
-**Ventajas:** control total — se puede instalar lo que necesite, sin restricciones.
-
-**Desventajas:** Uno es responsable de todo el mantenimiento (parches, seguridad, escalado)
-— requiere más conocimiento técnico y más tiempo.
-
-**Casos de uso típicos:** aplicaciones con requisitos muy específicos, cargas de trabajo con picos
-de tráfico impredecibles, o cuando se necesita control total por temas de seguridad o cumplimiento.
-
-**Tipos de servicios comunes:** Compute Engine (GCP), Amazon EC2 (AWS), Azure VM (Microsoft).
+- **Servicios:** servidores virtuales (cómputo), discos/almacenamiento, redes virtuales y firewalls.
+- **Pros:** control total.
+- **Contras:** responsabilidad del mantenimiento (parches, seguridad, escalado), necesidad de conocimiento.
+- **Casos de uso:** aplicaciones especificass, cargas de trabajo con picos.
+- **Ejemplos:** Compute Engine (GCP), Amazon EC2 (AWS), Azure VM (Microsoft).
 
 </details>
 <br>
@@ -177,13 +169,13 @@ se configura el servidor web, las reglas del firewall, se administran los arcivo
 
 ## PaaS — Platform as a Service
 
-**La idea:** el proveedor brinda un entorno ya listo para correr mi aplicación.
-Uno solo traigo mi código (o mi contenedor); y no hay preocupaciones por las configuraciones de sistema, redes,
+**Concepto:** el proveedor brinda un entorno ya listo para correr la aplicación.
+Uno solo trae el código; y no hay preocupaciones por las configuraciones de sistema, redes,
 ni por la infrastructura.
 
 ```mermaid
 graph TD
-    Yo["Yo administro"] --> APP[Mi aplicación / contenedor]
+    Yo["Yo administro"] --> APP[aplicación / contenedor]
     Proveedor["El proveedor administra"] --> RT[Sistema Operativo y Runtime]
     Proveedor --> VIRT[Virtualización + Infraestructura]
     style Yo fill:#2563eb,color:#fff
@@ -191,21 +183,15 @@ graph TD
 ```
 
 <details>
-<summary>Tipos de servicio, ventajas, desventajas y casos de uso</summary>
+<summary>Resumen</summary>
 
-**Tipos de servicio típicos:** plataformas para desplegar aplicaciones (Cloud Run, App Engine)
+- **Servicios:** plataformas para desplegar aplicaciones (Cloud Run, App Engine)
 bases de datos administradas (Cloud SQL).
-
-**Ventajas:** menos trabajo operativo — despliegue más rápido (se puede automatizar),
-no hay que instalar ni mantener servidores.
-
-**Desventajas:** menos control sobre los detalles del entorno; si el proveedor cambia algo de la plataforma,
-puede generar afectacionesafectarme.
-
-**Casos de uso típicos:** equipos que quieren enfocarse en el código de su aplicación,
-no en administrar infraestructura; proyectos que necesitan desplegar rápido y escalar sin esfuerzo manual.
-
-**Servicios comúnes:** Heroku, AWS Elastic Beanstalk, Google App Engine, Vercel.
+- **Pros:** menos trabajo operativo — despliegue rapido y automatizable, bajo mantenimiento.
+- **Contras:** menos control, cambios del proveedor pueden geenerar afectaciones.
+- **Casos de uso:** equipos enfocados en el desarrollo, no en administrar infraestructura;
+proyectos que necesitan desplegar rápido y escalar sin esfuerzo manual.
+- **Servicios comúnes:** Heroku, Google App Engine, Vercel.
 
 </details>
 <br>
@@ -217,7 +203,7 @@ Sin sistema operativo que elegir, sin VM, sin reglas de firewall, sin configurac
 
 ## 5. SaaS — Software as a Service
 
-**La idea:** el proveedor me entrega una aplicación completa, lista para usar.
+**Concepto:** el proveedor entrega una aplicación completa, lista para usar.
 Uno no administra nada de infraestructura — solo se usa el servicio.
 
 ```mermaid
@@ -230,19 +216,14 @@ graph TD
 ```
 
 <details>
-<summary>Tipos de servicio, ventajas, desventajas y casos de uso</summary>
+<summary>Resumen</summary>
 
-**Tipos de servicio típicos:** aplicaciones listas para usar vía navegador o API's:
+- **Servicios:** aplicaciones listas para usar (navegador o API's):
 correo electrónico, almacenamiento, CRM, herramientas de IA.
-
-**Ventajas:** cero trabajo de infraestructura; se usa de inmediato.
-
-**Desventajas:** poco o ningún control sobre cómo funciona internamente; se depende completamente
-de que el proveedor mantenga el servicio disponible y seguro.
-
-**Casos de uso típicos:** funciones de negocio estándar que no se necesitan construir
+- **Pros:** cero trabajo de infraestructura; se usa de inmediato.
+- **Contras:** caja gris; dependencia total del proveedor.
+- **Casos de uso:** funciones de negocio estándar que no se necesitan construir
 (correo, almacenamiento de archivos, gestión de clientes, modelos de IA generativa, steaming).
-
 **Servicios comunes:** Gmail, Dropbox, Slack, Salesforce, Notion.
 
 **Dato curioso:** según el (reporte)[https://zylo.com/blog/saas-statistics] de Zylo SaaS Management de 2026,
@@ -271,7 +252,8 @@ graph TB
     end
 ```
 
-Todo lo que vimos hoy corre, en última instancia, sobre la misma infraestructura física de Google. La diferencia es **cuántas capas de esa pila decidí ver y administrar yo mismo**.
+Todo lo que vimos hoy corre, en última instancia, sobre la misma infraestructura física de Google. 
+La diferencia es **cuántas capas de esa pila decidí ver y administrar yo mismo**.
 
 ---
 
@@ -298,19 +280,26 @@ Todo lo que vimos hoy corre, en última instancia, sobre la misma infraestructur
 ## El nivel de dependencia como criterio de decisión
 
 Vimos el mismo problema —tener una app funcionando— resuelto con tres niveles distintos de dependencia del proveedor.
-
 Ninguno es mejor que otro; cada uno responde a cuánto control necesita realmente el problema que se está resolviendo.
 
 > "La pregunta que de verdad importa nunca es '¿qué es IaaS?' — es '¿quién se despierta a las 3 a.m. si esto se cae?'"
+---
 
 <details>
-<summary>Nombre formal del concepto, para quien quiera profundizar</summary>
+<summary>Resumen</summary>
 
-Lo que en esta clase llamamos "nivel de dependencia" se llama, formalmente, **Shared Responsibility Model**.
+- La nube es un conjunto de servidores interconectados que ofrece variadad de servicios para desplegar
+aplicaciones contectadas a internet.
+- Para acceder a la nube ser cuenta con tres modelos de accesso a servicios.
+- IaaS: Se proprorciona acceso a recuersos virtualziados, el usuario debe configurar y mantener.
+- PaaS: Se propociana un entorno listo para desplegar aplciaciones, el suaurio solo se preocupa por el código.
+- SaaS: Se proporciona una palicacioón completamente admisnitrada por el proveedor, el usuario solo ocupa el servicio.
+- El modelo de responsabilidad compartida define qué le corresponde administrar al proveedor y qué al usuario.
 
 </details>
 
----
+
+
 
 ## Referencias
 
