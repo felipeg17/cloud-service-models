@@ -101,22 +101,6 @@ Eso, exactamente, es la diferencia entre **IaaS**, **PaaS** y **SaaS**.
 
 Cada modelo le entrega al proveedor **una capa más** del trabajo.
 
-```mermaid
-graph LR
-    A["On-Premises<br/>Administro todo"] --> B["IaaS<br/>Administro desde el SO"]
-    B --> C["PaaS<br/>Solo traigo el contenedor"]
-    C --> D["SaaS<br/>Solo uso el servicio"]
-
-    style A fill:#374151,color:#fff
-    style B fill:#2563eb,color:#fff
-    style C fill:#7c3aed,color:#fff
-    style D fill:#dc2626,color:#fff
-```
-
-_Menos dependencia del proveedor ← &nbsp;&nbsp;&nbsp;&nbsp; → Más dependencia del proveedor_
-
-### ¿Quién administra cada parte?
-
 |                                   | On-Premises | IaaS         | PaaS         | SaaS         |
 | --------------------------------- | ----------- | ------------ | ------------ | ------------ |
 | Mi aplicación y mis datos         | 🔵 Yo       | 🔵 Yo        | 🔵 Yo        | ⚪ Proveedor  |
@@ -126,11 +110,10 @@ _Menos dependencia del proveedor ← &nbsp;&nbsp;&nbsp;&nbsp; → Más dependenc
 [Tabla ampliada](http://localhost:8080/index.html)
 
 <details>
-<summary>Definición formal</summary>
+<summary>Definiciones formales</summary>
 
 En la industria se llama **Shared Responsibility Model** (modelo de responsabilidad compartida),
-el NIST establece: algo que en la nube debe tener acceso a demanda, disponible desde cualquier lugar,
-recursos compartidos, capacidad de crecer o reducirse automáticamente, y pago solo por lo que se usa.
+asimismo el NIST establece los requisitos para estar en la nube: acceso a demanda, disponibilidad desde cualquier lugar, recursos compartidos, capacidad de crecer o reducirse automáticamente (elasticidad), y pago solo por lo que se usa.
 </details>
 
 ---
@@ -155,7 +138,7 @@ graph TD
 
 - **Servicios:** servidores virtuales (cómputo), discos/almacenamiento, redes virtuales y firewalls.
 - **Pros:** control total.
-- **Contras:** responsabilidad del mantenimiento (parches, seguridad, escalado), necesidad de conocimiento.
+- **Contras:** responsabilidad del mantenimiento (parches, seguridad), necesidad de conocimiento.
 - **Casos de uso:** aplicaciones especificass, cargas de trabajo con picos.
 - **Ejemplos:** Compute Engine (GCP), Amazon EC2 (AWS), Azure VM (Microsoft).
 
@@ -191,7 +174,7 @@ bases de datos administradas (Cloud SQL).
 - **Contras:** menos control, cambios del proveedor pueden geenerar afectaciones.
 - **Casos de uso:** equipos enfocados en el desarrollo, no en administrar infraestructura;
 proyectos que necesitan desplegar rápido y escalar sin esfuerzo manual.
-- **Servicios comúnes:** Heroku, Google App Engine, Vercel.
+- **Ejemplos:** Heroku, Google App Engine, Vercel.
 
 </details>
 <br>
@@ -222,8 +205,7 @@ graph TD
 correo electrónico, almacenamiento, CRM, herramientas de IA.
 - **Pros:** cero trabajo de infraestructura; se usa de inmediato.
 - **Contras:** caja gris; dependencia total del proveedor.
-- **Casos de uso:** funciones de negocio estándar que no se necesitan construir
-(correo, almacenamiento de archivos, gestión de clientes, modelos de IA generativa, steaming).
+- **Casos de uso:** funciones de negocio estándar (correo, almacenamiento de archivos, gestión de clientes, modelos de IA generativa, streaming).
 **Servicios comunes:** Gmail, Dropbox, Slack, Salesforce, Notion.
 
 **Dato curioso:** según el (reporte)[https://zylo.com/blog/saas-statistics] de Zylo SaaS Management de 2026,
@@ -252,7 +234,7 @@ graph TB
     end
 ```
 
-Todo lo que vimos hoy corre, en última instancia, sobre la misma infraestructura física de Google. 
+Todo lo que vimos hoy corre, en última instancia, sobre la misma infraestructura física del proveedor.
 La diferencia es **cuántas capas de esa pila decidí ver y administrar yo mismo**.
 
 ---
@@ -297,9 +279,6 @@ aplicaciones contectadas a internet.
 - El modelo de responsabilidad compartida define qué le corresponde administrar al proveedor y qué al usuario.
 
 </details>
-
-
-
 
 ## Referencias
 
