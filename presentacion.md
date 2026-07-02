@@ -42,12 +42,12 @@ graph TD
 
 El problema no era técnico — era principalmente **operativo y financiero**:
 
-| Problema |
-|---------------------------------------------|
+| Problema                                    |
+| ------------------------------------------- |
 | Comprar el hardware por adelantado -> CaExp |
-| Capacidad fija -> Infra ociosa |
-| Escalamiento demorado -> Requiere recursos |
-| Mantenimiento 24/7 -> Soporte |
+| Capacidad fija -> Infra ociosa              |
+| Escalamiento demorado -> Requiere recursos  |
+| Mantenimiento 24/7 -> Soporte               |
 
 ### ¿Cómo nació la nube?
 
@@ -87,11 +87,11 @@ Eso, exactamente, es la diferencia entre **IaaS**, **PaaS** y **SaaS**.
 <details>
 <summary>Otras analogías equivalentes</summary>
 
-| Analogía  | On-Premises                      | IaaS                                     | PaaS                                  | SaaS                                     |
-| --------- | -------------------------------- | ---------------------------------------- | ------------------------------------- | ---------------------------------------- |
-| 🍞 Pan    | Horneo todo desde cero           | Alquilo la cocina vacía                  | Panadería con personal e ingredientes | Compro el pan horneado                   |
-| 🍕 Pizza  | Hago la masa desde cero en casa  | Compro masa y salsa para hornear en casa | Pizza a domicilio                     | Ceno en el restaurante                   |
-| 🍝 Pasta  | Compro los ingredientes y cocino | Compro pasta y salsa hechas              | Pido comida a domicilio               | Llamo y pido el plato exacto, todo listo |
+| Analogía | On-Premises                      | IaaS                                     | PaaS                                  | SaaS                                     |
+| -------- | -------------------------------- | ---------------------------------------- | ------------------------------------- | ---------------------------------------- |
+| 🍞 Pan   | Horneo todo desde cero           | Alquilo la cocina vacía                  | Panadería con personal e ingredientes | Compro el pan horneado                   |
+| 🍕 Pizza | Hago la masa desde cero en casa  | Compro masa y salsa para hornear en casa | Pizza a domicilio                     | Ceno en el restaurante                   |
+| 🍝 Pasta | Compro los ingredientes y cocino | Compro pasta y salsa hechas              | Pido comida a domicilio               | Llamo y pido el plato exacto, todo listo |
 
 </details>
 
@@ -103,9 +103,9 @@ Cada modelo le entrega al proveedor **una capa más** del trabajo.
 
 |                                   | On-Premises | IaaS         | PaaS         | SaaS         |
 | --------------------------------- | ----------- | ------------ | ------------ | ------------ |
-| Mi aplicación y mis datos         | 🔵 Yo       | 🔵 Yo        | 🔵 Yo        | ⚪ Proveedor  |
-| El sistema operativo y el runtime | 🔵 Yo       | 🔵 Yo        | ⚪ Proveedor | ⚪ Proveedor  |
-| Los servidores y la red física    | 🔵 Yo       | ⚪ Proveedor | ⚪ Proveedor | ⚪ Proveedor  |
+| Mi aplicación y mis datos         | 🔵 Yo       | 🔵 Yo        | 🔵 Yo        | ⚪ Proveedor |
+| El sistema operativo y el runtime | 🔵 Yo       | 🔵 Yo        | ⚪ Proveedor | ⚪ Proveedor |
+| Los servidores y la red física    | 🔵 Yo       | ⚪ Proveedor | ⚪ Proveedor | ⚪ Proveedor |
 
 [Tabla ampliada](http://localhost:8080/index.html)
 
@@ -114,6 +114,7 @@ Cada modelo le entrega al proveedor **una capa más** del trabajo.
 
 En la industria se llama **Shared Responsibility Model** (modelo de responsabilidad compartida),
 asimismo el NIST establece los requisitos para estar en la nube: acceso a demanda, disponibilidad desde cualquier lugar, recursos compartidos, capacidad de crecer o reducirse automáticamente (elasticidad), y pago solo por lo que se usa.
+
 </details>
 
 ---
@@ -148,6 +149,13 @@ graph TD
 **Ejemplo:** Compute Engine (servicio de computo en GCP). Se elije sistema operativo,
 se configura el servidor web, las reglas del firewall, se administran los arcivos.
 
+<details>
+  <summary>Resultados</summary>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/KlLL9oDIrzE?si=QXtJLZ_iyepe-WP-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+  </iframe>
+
+</details>
+
 ---
 
 ## PaaS — Platform as a Service
@@ -169,11 +177,11 @@ graph TD
 <summary>Resumen</summary>
 
 - **Servicios:** plataformas para desplegar aplicaciones (Cloud Run, App Engine)
-bases de datos administradas (Cloud SQL).
+  bases de datos administradas (Cloud SQL).
 - **Pros:** menos trabajo operativo — despliegue rapido y automatizable, bajo mantenimiento.
 - **Contras:** menos control, cambios del proveedor pueden geenerar afectaciones.
 - **Casos de uso:** equipos enfocados en el desarrollo, no en administrar infraestructura;
-proyectos que necesitan desplegar rápido y escalar sin esfuerzo manual.
+  proyectos que necesitan desplegar rápido y escalar sin esfuerzo manual.
 - **Ejemplos:** Heroku, Google App Engine, Vercel.
 
 </details>
@@ -202,11 +210,11 @@ graph TD
 <summary>Resumen</summary>
 
 - **Servicios:** aplicaciones listas para usar (navegador o API's):
-correo electrónico, almacenamiento, CRM, herramientas de IA.
+  correo electrónico, almacenamiento, CRM, herramientas de IA.
 - **Pros:** cero trabajo de infraestructura; se usa de inmediato.
 - **Contras:** caja gris; dependencia total del proveedor.
 - **Casos de uso:** funciones de negocio estándar (correo, almacenamiento de archivos, gestión de clientes, modelos de IA generativa, streaming).
-**Servicios comunes:** Gmail, Dropbox, Slack, Salesforce, Notion.
+  **Servicios comunes:** Gmail, Dropbox, Slack, Salesforce, Notion.
 
 **Dato curioso:** según el (reporte)[https://zylo.com/blog/saas-statistics] de Zylo SaaS Management de 2026,
 una organización promedio usa de 100 a 300 aplicaciones SaaS distintas — a veces sin que el equipo de TI lo sepa.
@@ -265,13 +273,14 @@ Vimos el mismo problema —tener una app funcionando— resuelto con tres nivele
 Ninguno es mejor que otro; cada uno responde a cuánto control necesita realmente el problema que se está resolviendo.
 
 > "La pregunta que de verdad importa nunca es '¿qué es IaaS?' — es '¿quién se despierta a las 3 a.m. si esto se cae?'"
+
 ---
 
 <details>
 <summary>Resumen</summary>
 
 - La nube es un conjunto de servidores interconectados que ofrece variadad de servicios para desplegar
-aplicaciones contectadas a internet.
+  aplicaciones contectadas a internet.
 - Para acceder a la nube ser cuenta con tres modelos de accesso a servicios.
 - IaaS: Se proprorciona acceso a recuersos virtualziados, el usuario debe configurar y mantener.
 - PaaS: Se propociana un entorno listo para desplegar aplciaciones, el suaurio solo se preocupa por el código.
