@@ -81,9 +81,11 @@ gcloud run deploy paas-demo \
 ### Limpieza
 
 ```bash
+# Limpieza compute engine
 gcloud compute instances delete vm-iaas-demo --zone=us-central1-a
+gcloud compute firewall-rules delete allow-http-demo
+
+# limpieza cloud run y GAR
 gcloud run services delete paas-demo --region=us-central1
-# eliminar imagen del GAR
-gcloud artifacts repositories list --location=us-central1   # ubicar el repo "cloud-run-source-deploy"
 gcloud artifacts repositories delete cloud-run-source-deploy --location=us-central1 --quiet
 ```
