@@ -17,7 +17,7 @@ accesible desde internet.
 
 ### Antes: infraestructura on-premise
 
-Hasta principios de los años 2000, la manera de construir servicio basado en internet era con
+Hasta principios de los años 2000, la manera de construir un servicio basado en internet era con
 infraestructura propia — a esto se le llama **on-premise** (literalmente, "en las
 instalaciones físicas"). Cualquier empresa que quisiera tener un sistema disponible en internet
 tenía que resolver:
@@ -44,7 +44,7 @@ El problema no era técnico — era principalmente **operativo y financiero**:
 
 | Problema                                    |
 | ------------------------------------------- |
-| Comprar el hardware por adelantado -> CaExp |
+| Comprar el hardware por adelantado -> CapEx |
 | Capacidad fija -> Infra ociosa              |
 | Escalamiento demorado -> Requiere recursos  |
 | Mantenimiento 24/7 -> Soporte               |
@@ -60,10 +60,10 @@ comercial a gran escala.
 ### La nube al día de hoy
 
 Hoy en día, "usar la nube" significa `acceder a una red gigante de servidores interconectados
-que proporciona recursos` y son propiedad de un proveedor, el cual se ocupa de todo y nosotros solo
+que proporciona recursos` y es propiedad de un proveedor, el cual se ocupa de todo y nosotros solo
 pagamos por lo que usamos.
 
-Pero "usar la nube" no es solo pagar, hay distintos niveles de cuánto hace el proveedor
+Pero "usar la nube" no es solo pagar: hay distintos niveles de cuánto hace el proveedor
 y cuánto tenemos que hacer nosotros mismos. Esto se conoce como **modelos de servicio**: IaaS, PaaS y SaaS.
 
 ---
@@ -140,21 +140,14 @@ graph TD
 - **Servicios:** servidores virtuales (cómputo), discos/almacenamiento, redes virtuales y firewalls.
 - **Pros:** control total.
 - **Contras:** responsabilidad del mantenimiento (parches, seguridad), necesidad de conocimiento.
-- **Casos de uso:** aplicaciones especificass, cargas de trabajo con picos.
+- **Casos de uso:** aplicaciones específicas, cargas de trabajo con picos.
 - **Ejemplos:** Compute Engine (GCP), Amazon EC2 (AWS), Azure VM (Microsoft).
 
 </details>
 <br>
 
-**Ejemplo:** Compute Engine (servicio de computo en GCP). Se elije sistema operativo,
-se configura el servidor web, las reglas del firewall, se administran los arcivos.
-
-<details>
-  <summary>Resultados</summary>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/KlLL9oDIrzE?si=QXtJLZ_iyepe-WP-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>
-
-</details>
+**Ejemplo:** Compute Engine (servicio de cómputo en GCP). Se elige sistema operativo,
+se configura el servidor web, las reglas del firewall, se administran los archivos. -- [vídeo](https://youtu.be/KlLL9oDIrzE?si=XYtbd49DWsocg-KE) --
 
 ---
 
@@ -178,8 +171,8 @@ graph TD
 
 - **Servicios:** plataformas para desplegar aplicaciones (Cloud Run, App Engine)
   bases de datos administradas (Cloud SQL).
-- **Pros:** menos trabajo operativo — despliegue rapido y automatizable, bajo mantenimiento.
-- **Contras:** menos control, cambios del proveedor pueden geenerar afectaciones.
+- **Pros:** menos trabajo operativo — despliegue rápido y automatizable, bajo mantenimiento.
+- **Contras:** menos control, cambios del proveedor pueden generar afectaciones.
 - **Casos de uso:** equipos enfocados en el desarrollo, no en administrar infraestructura;
   proyectos que necesitan desplegar rápido y escalar sin esfuerzo manual.
 - **Ejemplos:** Heroku, Google App Engine, Vercel.
@@ -189,6 +182,7 @@ graph TD
 
 **Ejemplo en vivo:** Cloud Run (`paas-demo`) — el mismo sitio web, pero solo se precisa el contenedor.
 Sin sistema operativo que elegir, sin VM, sin reglas de firewall, sin configuración de redes, sin gestión de URLs.
+-- [vídeo](https://youtu.be/dqXgCi9vXgE?si=q-g7GgDRi11h_WQk) --
 
 ---
 
@@ -209,14 +203,14 @@ graph TD
 <details>
 <summary>Resumen</summary>
 
-- **Servicios:** aplicaciones listas para usar (navegador o API's):
+- **Servicios:** aplicaciones listas para usar (navegador o APIs):
   correo electrónico, almacenamiento, CRM, herramientas de IA.
 - **Pros:** cero trabajo de infraestructura; se usa de inmediato.
 - **Contras:** caja gris; dependencia total del proveedor.
 - **Casos de uso:** funciones de negocio estándar (correo, almacenamiento de archivos, gestión de clientes, modelos de IA generativa, streaming).
   **Servicios comunes:** Gmail, Dropbox, Slack, Salesforce, Notion.
 
-**Dato curioso:** según el (reporte)[https://zylo.com/blog/saas-statistics] de Zylo SaaS Management de 2026,
+**Dato curioso:** según el [reporte](https://zylo.com/blog/saas-statistics) de Zylo SaaS Management de 2026,
 una organización promedio usa de 100 a 300 aplicaciones SaaS distintas — a veces sin que el equipo de TI lo sepa.
 
 </details>
@@ -224,6 +218,7 @@ una organización promedio usa de 100 a 300 aplicaciones SaaS distintas — a ve
 
 **Ejemplo en vivo:** Vertex AI / Gemini API. No hay sistema operativo, ni contenedor,
 ni servidor que yo pueda ver o tocar — solo un _endpoint_, una credencial, y una respuesta.
+-- [vídeo](https://youtu.be/09soVNcgzDc?si=SgZ4vCaDFayD6NWM) --
 
 ---
 
@@ -279,12 +274,12 @@ Ninguno es mejor que otro; cada uno responde a cuánto control necesita realment
 <details>
 <summary>Resumen</summary>
 
-- La nube es un conjunto de servidores interconectados que ofrece variadad de servicios para desplegar
-  aplicaciones contectadas a internet.
-- Para acceder a la nube ser cuenta con tres modelos de accesso a servicios.
-- IaaS: Se proprorciona acceso a recuersos virtualziados, el usuario debe configurar y mantener.
-- PaaS: Se propociana un entorno listo para desplegar aplciaciones, el suaurio solo se preocupa por el código.
-- SaaS: Se proporciona una palicacioón completamente admisnitrada por el proveedor, el usuario solo ocupa el servicio.
+- La nube es un conjunto de servidores interconectados que ofrece variedad de servicios para desplegar
+  aplicaciones conectadas a internet.
+- Para acceder a la nube se cuenta con tres modelos de acceso a servicios.
+- IaaS: Se proporciona acceso a recursos virtualizados, el usuario debe configurar y mantener.
+- PaaS: Se proporciona un entorno listo para desplegar aplicaciones, el usuario solo se preocupa por el código.
+- SaaS: Se proporciona una aplicación completamente administrada por el proveedor, el usuario solo ocupa el servicio.
 - El modelo de responsabilidad compartida define qué le corresponde administrar al proveedor y qué al usuario.
 
 </details>
