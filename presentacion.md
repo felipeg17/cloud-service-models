@@ -1,4 +1,4 @@
-# Modelos de Servicio en la Nube: ¿cuánta nube necesito para desplegar mi software?
+# Modelos de Servicio en la Nube: ¿qué modelo me conviene para desplegar mi software?
 
 ## Contenido
 
@@ -104,10 +104,10 @@ Cada modelo le entrega al proveedor **una capa más** del trabajo.
 
 |                                   | On-Premises | IaaS         | PaaS         | SaaS         |
 | --------------------------------- | ----------- | ------------ | ------------ | ------------ |
-| Mi aplicación                     | 🔵 Yo       | 🔵 Yo        | 🔵 Yo        | ⚪ Proveedor |
-| Mis datos / configuración         | 🔵 Yo       | 🔵 Yo        | 🔵 Yo        | 🔵 Yo        |
-| El sistema operativo y el runtime | 🔵 Yo       | 🔵 Yo        | ⚪ Proveedor | ⚪ Proveedor |
-| Los servidores y la red física    | 🔵 Yo       | ⚪ Proveedor | ⚪ Proveedor | ⚪ Proveedor |
+| Mis datos / configuración         | 🔵 Usuario  | 🔵 Usuario    | 🔵 Usuario   | 🔵 Usuario   |
+| Mi aplicación                     | 🔵 Usuario  | 🔵 Usuario    | 🔵 Usuario   | ⚪ Proveedor |
+| El sistema operativo y el runtime | 🔵 Usuario  | 🔵 Usuario    | ⚪ Proveedor | ⚪ Proveedor |
+| Los servidores y la red física    | 🔵 Usuario  | ⚪ Proveedor  | ⚪ Proveedor | ⚪ Proveedor |
 
 [Tabla ampliada](http://localhost:8080/index.html)
 
@@ -182,7 +182,7 @@ graph TD
 </details>
 <br>
 
-**Ejemplo en vivo:** Cloud Run (`paas-demo`) — el mismo sitio web, pero solo se necesita el contenedor,
+**Ejemplo:** Cloud Run (`paas-demo`) — el mismo sitio web, pero solo se necesita el contenedor,
 sin administrar VMs ni sistema operativo directamente, y con una gestión de red y exposición del servicio mucho más abstraída.
 -- [vídeo](https://youtu.be/dqXgCi9vXgE?si=q-g7GgDRi11h_WQk) --
 
@@ -218,7 +218,7 @@ una organización promedio usa de 100 a 300 aplicaciones SaaS distintas — a ve
 </details>
 <br>
 
-**Ejemplo en vivo:** Vertex AI / Gemini API. No hay sistema operativo, ni contenedor,
+**Ejemplo:** Vertex AI / Gemini API. No hay sistema operativo, ni contenedor,
 ni servidor que yo pueda ver o tocar — solo un _endpoint_, una credencial, y una respuesta.
 -- [vídeo](https://youtu.be/09soVNcgzDc?si=SgZ4vCaDFayD6NWM) --
 
