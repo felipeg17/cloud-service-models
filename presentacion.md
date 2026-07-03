@@ -85,29 +85,11 @@ La diferencia es **cuánto control tengo** y **cuánto trabajo me ahorro**.
 Ahora, si reemplazamos ‘pan’ por ‘mi aplicación en la nube’, estamos ante la misma decisión sobre el modelo de servicio.
 Eso, exactamente, es la diferencia entre **IaaS**, **PaaS** y **SaaS**.
 
-<details>
-<summary>Otras analogías equivalentes</summary>
-
-| Analogía | On-Premises                      | IaaS                                     | PaaS                                  | SaaS                                     |
-| -------- | -------------------------------- | ---------------------------------------- | ------------------------------------- | ---------------------------------------- |
-| 🍞 Pan   | Horneo todo desde cero           | Alquilo la cocina vacía                  | Panadería con personal e ingredientes | Compro el pan horneado                   |
-| 🍕 Pizza | Hago la masa desde cero en casa  | Compro masa y salsa para hornear en casa | Pizza a domicilio                     | Ceno en el restaurante                   |
-| 🍝 Pasta | Compro los ingredientes y cocino | Compro pasta y salsa hechas              | Pido comida a domicilio               | Llamo y pido el plato exacto, todo listo |
-
-</details>
-
 ---
 
 ## La pila de responsabilidad
 
 Cada modelo le entrega al proveedor **una capa más** del trabajo.
-
-|                                   | On-Premises | IaaS         | PaaS         | SaaS         |
-| --------------------------------- | ----------- | ------------ | ------------ | ------------ |
-| Mis datos / configuración         | 🔵 Usuario  | 🔵 Usuario    | 🔵 Usuario   | 🔵 Usuario   |
-| Mi aplicación                     | 🔵 Usuario  | 🔵 Usuario    | 🔵 Usuario   | ⚪ Proveedor |
-| El sistema operativo y el runtime | 🔵 Usuario  | 🔵 Usuario    | ⚪ Proveedor | ⚪ Proveedor |
-| Los servidores y la red física    | 🔵 Usuario  | ⚪ Proveedor  | ⚪ Proveedor | ⚪ Proveedor |
 
 [Tabla ampliada](http://localhost:8080/index.html)
 
@@ -239,9 +221,6 @@ graph TB
     end
 ```
 
-Todo lo que vimos hoy corre, en última instancia, sobre la misma infraestructura física del proveedor.
-La diferencia es **cuántas capas de esa pila decidí ver y administrar yo mismo**.
-
 ---
 
 ## Actividad: clasifica el servicio
@@ -268,8 +247,6 @@ La diferencia es **cuántas capas de esa pila decidí ver y administrar yo mismo
 
 Vimos el mismo problema —tener una app funcionando— resuelto con tres niveles distintos de dependencia del proveedor.
 Ninguno es mejor que otro; cada uno responde a cuánto control necesita realmente el problema que se está resolviendo.
-
-> "La pregunta que de verdad importa nunca es '¿qué es IaaS?' — es '¿quién se despierta a las 3 a.m. si esto se cae?'"
 
 ---
 
